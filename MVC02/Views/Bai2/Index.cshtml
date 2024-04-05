@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Register";
+}
+
+<form method="post" action="/Bai2/Receive">
+    <div>
+        <span>Username: </span>
+        <input type="text" name="username" />
+    </div>
+    <div>
+        <span>Password: </span>
+        <input type="password" name="password" />
+    </div>
+    <div>
+        <span>Email: </span>
+        <input type="email" name="email" />
+    </div>
+    <input type="submit" value="Submit" />
+</form>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        var username = document.querySelector('input[name="username"]').value;
+        var password = document.querySelector('input[name="password"]').value;
+        var email = document.querySelector('input[name="email"]').value;
+
+        if (username === "") {
+            e.preventDefault();
+            alert("Vui lòng nhập username.");
+            document.querySelector('input[name="username"]').style.border = "1px solid red";
+        }
+
+        if (password.length < 8 || !/\d/.test(password)) {
+            e.preventDefault();
+            alert("Mật khẩu phải chứa ít nhất 8 ký tự và ít nhất 1 số.");
+            document.querySelector('input[name="password"]').style.border = "1px solid red";
+        }
+
+    });
+</script>

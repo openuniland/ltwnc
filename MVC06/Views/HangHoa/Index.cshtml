@@ -1,0 +1,65 @@
+@model IEnumerable<MVC06.Models.tblHanghoa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    <img class="cart" src="~/images/cart.jpg" alt="">
+</div>
+<table class="table">
+
+    <form asp-action="Search" method="get">
+        <div class="input-group mb-4">
+            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                aria-describedby="search-addon" name="searchString" />
+            <button type="submit" class="btn btn-outline-primary">Lọc</button>
+        </div>
+    </form>
+
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card m-1" style="width: 18rem;">
+                        <img src="@Html.DisplayFor(modelItem => item.sAnhminhhoa)" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.sTenHang)</h5>
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.fGianiemyet)</p>
+                            <button href="#" class="btn btn-primary add-to-cart" data-id=" @item.PK_iHanghoaID">Add to
+                                cart</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    console.log('test');
+    $(document).ready(function () {
+        $('.add-to-cart').click(function (e) {
+            e.preventDefault();
+
+            var productId = $(this).data('id');
+
+            $.ajax({
+                url: '/HangHoa/AddToCart',
+                type: 'POST',
+                data: { id: productId },
+                success: function (response) {
+                    $('#cart-count').text(response);
+                }
+            });
+        });
+    });
+</script>
